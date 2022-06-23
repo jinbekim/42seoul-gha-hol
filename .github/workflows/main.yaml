@@ -3,31 +3,39 @@
 # 'My second github action'
 name: 'My first github action'
 
-# when
-on: push
+# event name
+on: [ 'push', 'pull_request' ]
 
 # workflow
 jobs:
   first-job:
     name: 'first job'
 
-    strategy:
-      matrix:
-        os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest']
-        nodejs: [ '14.x', '16.x' ]
-
-    # build server
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Setup node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.nodejs }}
-
-    - name: output value from ${{ matrix.os }}
+    - name: output value 1
       id: first
       shell: bash
       run: |
-        echo "OS: ${{ matrix.os }}"
-        echo "node.js: ${{ matrix.nodejs }}"
+        echo "Hello, world!"
+
+    - name: output value 2
+      id: first
+      if: github.event_name == 'pull_request'
+      shell: bash
+      run: |
+        echo "Hello, world!"
+
+  second-job:
+    name: 'second job'
+    if: github.event_name == 'pull_request'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: output value
+      id: first
+      shell: bash
+      run: |
+        echo "Hello, world!"

@@ -1,0 +1,26 @@
+# name, on, jobs are mandantory
+# One file
+# 'My second github action'
+name: 'My first github action'
+
+# when
+on: push
+
+# workflow
+jobs:
+  first-job:
+    name: 'first job'
+
+    # build server
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Say Hello World 1
+      shell: bash
+      run:
+        echo "Hello World from step 1"
+
+    - name: Say Hello World 2
+      shell: pwsh
+      run:
+        echo "Hello World from step 2"

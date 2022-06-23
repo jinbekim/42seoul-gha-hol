@@ -35,3 +35,4 @@ jobs:
       # ${{}} -> github action grammer
       run: |
         echo ${{ steps.first.outputs.my_first_value }}
+        echo "SECRET: ${{ secrets.HELLO }}"

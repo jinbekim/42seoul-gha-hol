@@ -19,7 +19,7 @@ jobs:
       JOB_LEVEL_1: 'This comes from job level 1'
 
     steps:
-    - name: set output value
+    - name: mask value
       id: first
       shell: bash
       # assing $first_value to my_first_value
@@ -27,7 +27,9 @@ jobs:
       run: |
         first_value="This is the first output value"
 
+        echo "::add-mask::$first_value"
         echo "::set-output name=my_first_value::$first_value"
+
     - name: get output value
       shell: bash
       # ${{}} -> github action grammer

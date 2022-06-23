@@ -11,28 +11,18 @@ jobs:
   first-job:
     name: 'first job'
 
-    # build server
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ 'windows-latest', 'macos-latest', 'ubuntu-latest']
+        nodejs: [ '14.x', '16.x' ]
 
-    # job level environment
-    env:
-      JOB_LEVEL_1: 'This comes from job level 1'
+    # build server
+    runs-on: ${{ matrix.os }}
 
     steps:
-    - name: mask value
+    - name: output value from ${{ matrix.os }}
       id: first
       shell: bash
-      # assing $first_value to my_first_value
-      # output might be secure than env
       run: |
-        first_value="This is the first output value"
-
-        echo "::add-mask::$first_value"
-        echo "::set-output name=my_first_value::$first_value"
-
-    - name: get output value
-      shell: bash
-      # ${{}} -> github action grammer
-      run: |
-        echo ${{ steps.first.outputs.my_first_value }}
-        echo "SECRET: ${{ secrets.HELLO }}"
+        echo "OS: ${{ matrix.os }}"
+        echo "node.js: ${{ matrix.nodejs }}"

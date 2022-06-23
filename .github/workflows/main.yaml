@@ -19,27 +19,17 @@ jobs:
       JOB_LEVEL_1: 'This comes from job level 1'
 
     steps:
-    - name: Say Hello World 1
+    - name: set output value
+      id: first
       shell: bash
-      env:
-        STEP_LEVEL_1: 'This comes from step level 1'
-      #
+      # assing $first_value to my_first_value
+      # output might be secure than env
       run: |
-        echo "Hello World from step 1"
-        echo "STEP_VALUE_1='THIS IS SET BY STEP 1'" >> $GITHUB_ENV
+        first_value="This is the first output value"
 
-    - name: Say Hello World 2
-      shell: pwsh
-      # github env : json 형태
-      # 두 번째 세 번째는 pwsh에서 가져올때 해당
-      run: |
-        echo "Hello World from step 2"
-        echo "VALUE: $env:STEP_VALUE_1"
-        echo "VALUE: ${{ env.STEP_VALUE_1 }}"
-
-    - name: Say Hello World 3
+        echo "::set-output name=my_first_value::$first_value"
+    - name: get output value
       shell: bash
+      # ${{}} -> github action grammer
       run: |
-        echo "Hello World from step 2"
-        echo "VALUE: $STEP_VALUE_1"
-        echo "VALUE: ${{ env.STEP_VALUE_1 }}"
+        echo ${{ steps.first.outputs.my_first_value }}

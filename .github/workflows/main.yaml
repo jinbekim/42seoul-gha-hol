@@ -6,6 +6,10 @@ name: 'My first github action'
 # when
 on: push
 
+# scope
+env:
+  WORKFLOW_LEVLE: 'This value comes from the workflow level.'
+
 # workflow
 jobs:
   first-job:
@@ -14,13 +18,62 @@ jobs:
     # build server
     runs-on: ubuntu-latest
 
+    # job level environment
+    env:
+      JOB_LEVEL_1: 'This comes from job level 1'
+
     steps:
     - name: Say Hello World 1
       shell: bash
-      run:
+      env:
+        STEP_LEVEL_1: 'This comes from step level 1'
+      run: |
         echo "Hello World from step 1"
+        echo $WORKFLOW_LEVLE
+        echo $JOB_LEVEL_1
+        echo $JOB_LEVEL_2
+        echo $STEP_LEVEL_1
+        echo $STEP_LEVEL_2
 
     - name: Say Hello World 2
       shell: pwsh
-      run:
+      env:
+        STEP_LEVEL_2: 'This comes from step level 2'
+      run: |
         echo "Hello World from step 2"
+        echo $WORKFLOW_LEVLE
+        echo $JOB_LEVEL_1
+        echo $JOB_LEVEL_2
+        echo $STEP_LEVEL_1
+        echo $STEP_LEVEL_2
+
+  second-job:
+    name: 'Second job'
+
+    # build server
+    runs-on: ubuntu-latest
+
+    # job level environment
+    env:
+      JOB_LEVEL_2: 'This comes from job level 2'
+
+    steps:
+    - name: Say Hello World 1
+      shell: bash
+      env:
+        STEP_LEVEL_1: 'This comes from step level 1'
+      run: |
+        echo "Hello World from step 1"
+        echo $WORKFLOW_LEVLE
+        echo $JOB_LEVEL_1
+        echo $JOB_LEVEL_2
+        echo $STEP_LEVEL_1
+
+    - name: Say Hello World 2
+      shell: pwsh
+      run: |
+        echo "Hello World from step 2"
+        echo $WORKFLOW_LEVLE
+        echo $JOB_LEVEL_1
+        echo $JOB_LEVEL_2
+        echo $STEP_LEVEL_1
